@@ -27,7 +27,8 @@ export class NumberInput extends React.PureComponent<IProps, IState> {
   }
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value || this.props.defaultValue;
+    const { defaultValue = "" } = this.props;
+    let value = e.target.value || defaultValue;
     if (value.length > 1 && value.startsWith("0") && value.substr(1, 1) !== ".") {
       value = value.substr(1);
     }
@@ -68,7 +69,7 @@ export class NumberInput extends React.PureComponent<IProps, IState> {
 
   onBlur = () => {
     const { value } = this.state;
-    const { onChange, defaultValue } = this.props;
+    const { onChange, defaultValue = "" } = this.props;
     if (onChange) {
       onChange(value || defaultValue);
     }
