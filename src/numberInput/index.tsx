@@ -4,8 +4,9 @@ import "./styles.less";
 interface IProps {
   value: string;
   onChange: (value: string) => void;
-  disabled: boolean;
-  precision: number;
+  disabled?: boolean;
+  precision?: number;
+  defaultValue?: string;
 }
 
 interface IState {
@@ -26,7 +27,7 @@ export class NumberInput extends React.PureComponent<IProps, IState> {
   }
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value || "0";
+    let value = e.target.value || this.props.defaultValue;
     if (value.length > 1 && value.startsWith("0") && value.substr(1, 1) !== ".") {
       value = value.substr(1);
     }
@@ -67,9 +68,9 @@ export class NumberInput extends React.PureComponent<IProps, IState> {
 
   onBlur = () => {
     const { value } = this.state;
-    const { onChange } = this.props;
+    const { onChange, defaultValue } = this.props;
     if (onChange) {
-      onChange(value || "0");
+      onChange(value || defaultValue);
     }
   };
 
